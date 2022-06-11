@@ -1,0 +1,27 @@
+<template lang="">
+  <h1>
+    <span>The OMDb API </span><br />
+    THE OPEN<br />
+    MOVIE DATABASE
+  </h1>
+  
+  <p>
+  The OMDb API  is a RESTful web service to obtain movie information, all content and images on the site are contributed and maintained by our users.
+  If you find this service useful, please consider making a one-time donation or become a patron.
+  </p>
+</template>
+<script>
+export default {
+  
+}
+</script>
+<style lang="ko" scoped>
+@import "~/scss/main";
+  h1 {
+    line-height: 1;
+    font-family: "Varela Round", sans-serif;
+    span {
+      color: $primary;
+    }
+  }
+</style>
