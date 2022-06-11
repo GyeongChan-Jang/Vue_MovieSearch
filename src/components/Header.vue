@@ -3,9 +3,15 @@
   <header>
     <Logo />
     <div class="nav nav-pills">
-      <div v-for="nav in navigations" v-bind:key="nav.name" class="nav-item">
-        <RouterLink v-bind:to="nav.href" active-class="active" class="nav-link">
-          {{nav.name}}
+      <div
+        v-for="nav in navigations"
+        :key="nav.name"
+        class="nav-item">
+        <RouterLink
+          :to="nav.href"
+          active-class="active"
+          class="nav-link">
+          {{ nav.name }}
         </RouterLink>
       </div>
     </div>

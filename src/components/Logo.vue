@@ -1,6 +1,8 @@
 /* eslint-disable vue/multi-word-component-names */
 <template lang="">
-  <RouterLink to="/" class="logo">
+  <RouterLink
+    to="/"
+    class="logo">
     <span>Movie</span>Box
   </RouterLink>
 </template>

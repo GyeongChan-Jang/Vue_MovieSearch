@@ -1,13 +1,16 @@
 /* eslint-disable vue/multi-word-component-names */
 <template lang="">
-  <div class="home">
-    <h1>This is Home!</h1>
-    <Button class="btn btn-primary" >Home</Button>    
-  </div>
+  <Headline />
+  <Search />
 </template>
 <script>
+import Headline from '../components/Headline'
+import Search from '../components/Search'
 export default {
-  
+  components: {
+    Headline,
+    Search
+  }
 }
 </script>
 <style lang="">
