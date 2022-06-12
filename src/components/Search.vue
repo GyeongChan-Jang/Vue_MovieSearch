@@ -11,8 +11,8 @@
         v-for="filter in filters"
         id=""
         :key="filter.name"
+        v-model="$data[filter.name]"
         class="form-select"
-        vo-model="$data[filter.name]"
         name="">
         <option
           v-if="filter.name === 'year'"
