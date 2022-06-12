@@ -1,23 +1,41 @@
+import axios from 'axios'
+
 export default {
-  // module!
   namespaced: true,
-  // data!
   state: () => ({
-    movies: []
+    movies: [],
+    message: '',
+    loading: false
   }),
-  // computed!
   getters: {
     movieIds(state) {
       return state.movies.map((m) => m.omdbID)
     }
   },
-  // methods!
-  // 변이 - state의 데이터들을 변경시켜줄 수 있음, 다른 곳에서는 수정 불가
   mutations: {
+    updateState(state, payload) {
+      // 속성의 이름들을 배열로 반환 => ['movies', 'message', 'loading']
+      // 로직 대박!
+      Object.keys(payload).forEach((key) => {
+        state[key] = payload[key]
+      })
+    },
     resetMovies(state) {
       state.movies = []
     }
   },
-  // 비동기로 동작함! async/await 안해도 됨
-  actions: {}
+  actions: {
+    // context 안에서 commit만 사용사도록 구조분해 할당
+    async searchMovies({ commit }, payload) {
+      const { title, type, year, number } = payload
+      const OMDB_API_KEY = '7035c60c'
+      const res = await axios.get(
+        `http://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${title}&type=${type}&y=${year}&page=1`
+      )
+      const { Search, totalResults } = res.data
+      commit('updateState', {
+        movies: Search
+      })
+    }
+  }
 }

@@ -33,8 +33,9 @@
     </div>
   </div>
 </template>
+
 <script>
-import axios from 'axios'
+
 export default {
   data() {
     return {
@@ -67,9 +68,12 @@ export default {
   },
   methods: {
     async apply() {
-      const OMDB_API_KEY='7035c60c'
-      const res = await axios.get(`http://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${this.title}&type=${this.type}&y=${this.year}&page=1`)
-      console.log(res)
+      this.$store.dispatch('movie/searchMovies', {
+        title: this.title,
+        type: this.type,
+        number: this.number,
+        year: this.year
+      })
     }
   }
 }
