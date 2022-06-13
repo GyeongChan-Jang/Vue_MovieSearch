@@ -1,6 +1,9 @@
 <template lang="">
   <div class="container">
     <div class="inner">
+      <div class="messate">
+        {{ message }}
+      </div>
       <MovieItem
         v-for="movie in movies"
         :key="movie.omdbID"
@@ -19,6 +22,9 @@ export default {
     movies() {
       // $store로 스토어 접근 state 중 movie 모듈 사용 movies 데이터 가져옴
       return this.$store.state.movie.movies
+    },
+    message() {
+      return this.$store.state.movie.message
     }
   }
 }
