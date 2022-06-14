@@ -5,7 +5,7 @@ export default {
   namespaced: true,
   state: () => ({
     movies: [],
-    message: '',
+    message: 'Search for the movie title!',
     loading: false
   }),
   getters: {
@@ -28,6 +28,12 @@ export default {
   actions: {
     // context 안에서 commit만 사용사도록 구조분해 할당
     async searchMovies({ state, commit }, payload) {
+      // 사용자가 여러번 검색 버튼을 누를 경우 이전 요청이 완료되지 않았을 때는 검색이 실행되지 않도록 break
+      if (state.loading) return
+      commit('updateState', {
+        message: '',
+        loading: true
+      })
       try {
         const res = await _fetchMovie({
           ...payload,
@@ -59,6 +65,10 @@ export default {
         commit('updateState', {
           movies: [],
           message
+        })
+      } finally {
+        commit('updateState', {
+          loading: false
         })
       }
     }
