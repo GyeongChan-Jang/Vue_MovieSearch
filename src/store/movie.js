@@ -6,7 +6,8 @@ export default {
   state: () => ({
     movies: [],
     message: 'Search for the movie title!',
-    loading: false
+    loading: false,
+    theMovie: {}
   }),
   getters: {
     movieIds(state) {
@@ -26,7 +27,7 @@ export default {
     }
   },
   actions: {
-    // context 안에서 commit만 사용사도록 구조분해 할당
+    // context 안에서 commit과 state를 사용하기 위해 구조 분해 할당!
     async searchMovies({ state, commit }, payload) {
       // 사용자가 여러번 검색 버튼을 누를 경우 이전 요청이 완료되지 않았을 때는 검색이 실행되지 않도록 break
       if (state.loading) return
@@ -71,6 +72,30 @@ export default {
           loading: false
         })
       }
+    },
+    async searchMovieWithId({ state, commit }, payload) {
+      if (state.loading) return
+
+      commit('updateState', {
+        theMovie: {},
+        loading: true
+      })
+
+      try {
+        const res = await _fetchMovie(payload)
+        commit('updateState', {
+          theMovie: res.data
+        })
+      } catch (err) {
+        // 에러가 날 경우 영화 상세정보를 비워줌!
+        commit('updateState', {
+          theMovie: {}
+        })
+      } finally {
+        commit('updateState', {
+          loading: false
+        })
+      }
     }
   }
 }
@@ -80,9 +105,11 @@ export default {
 // 또한 omdb api의 경우 잘못된 데이터를 요청해도 요쳥응답은 제대로 나오지만 데이터는 보내지 않는 경우가 있음
 // 이럴 때의 예외처리를 위한 이유로도 따로 함수를 만드는 것이 좋음
 function _fetchMovie(payload) {
-  const { title, type, year, page } = payload
+  const { title, type, year, page, id } = payload
   const OMDB_API_KEY = '7035c60c'
-  const url = `http://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${title}&type=${type}&y=${year}&page=${page}`
+  const url = id
+    ? `http://www.omdbapi.com/?apikey=${OMDB_API_KEY}&ㅑ=${id}`
+    : `http://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${title}&type=${type}&y=${year}&page=${page}`
 
   return new Promise((resolve, reject) => {
     axios
