@@ -3,10 +3,7 @@
     <div
       :class="{'no-result': !movies.length}"
       class="inner">
-      <div
-        v-if="loading"
-        class="spinner-grow text-primary"
-        style="width: 3rem; height: 3rem;"></div>
+      <Loader v-if="loading" />
       <div
         v-if="message"
         class="message">
@@ -25,9 +22,11 @@
 </template>
 <script>
 import MovieItem from './MovieItem.vue'
+import Loader from './Loader.vue'
 export default {
   components: {
-      MovieItem
+      MovieItem,
+      Loader
     },
   computed: {
     // 검색 했을 때 반응성 있게 데이터가 갱신되어야 해서 computed에서 정의
