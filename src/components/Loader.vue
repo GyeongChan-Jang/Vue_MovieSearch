@@ -2,8 +2,8 @@
   <!-- absolute가 true 라면 class에 abosolute 할당 -->
   <div
     :style="{
-      width: `{size}rem`,
-      height: `{size}rem`,
+      width: `${size}rem`,
+      height: `${size}rem`,
       zIndex
     }"
     :class="{absolute:absolute, fixed: fixed}"
@@ -33,7 +33,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.spinner-border {
+.spinner-grow {
   margin: auto;
   top: 0;
   bottom: 0;
