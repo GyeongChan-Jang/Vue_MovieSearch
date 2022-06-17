@@ -8,6 +8,7 @@
         :key="nav.name"
         class="nav-item">
         <RouterLink
+          :class="{active: isMatch(nav.path)}"
           :to="nav.href"
           active-class="active"
           class="nav-link">
@@ -32,13 +33,21 @@ export default {
         },
         {
           name: 'Movie',
-          href: '/movie/tt4520988'
+          href: '/movie/:id',
+          path: /^\/movie/ // '/movie로 시작하는 경로'
         },
         {
           name: 'About',
           href: '/about'
         }
       ]
+    }
+  },
+  methods: {
+    isMatch(path) {
+      if(!path) return 
+      console.log(this.$route)
+      return path.test(this.$route.fullPath) // test 메서드 -> 정규표현식을 받아 일지하는지 판별, fullPath -> route 전체 경로
     }
   }
 }

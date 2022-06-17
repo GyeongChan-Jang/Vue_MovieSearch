@@ -40,7 +40,7 @@ export default {
   data() {
     return {
       title: '',
-      type: 'movie',
+      type: 'Movie',
       number: 10,
       year: '',
       filters: [

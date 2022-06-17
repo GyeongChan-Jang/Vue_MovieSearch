@@ -23,7 +23,11 @@
       class="movie-details">
       <div 
         :style="{backgroundImage: `url(${reqeustDiffSizeImage(theMovie.Poster)})`}"
-        class="poster"></div>
+        class="poster">
+        <Loader 
+          v-if="imageLoading"
+          absolute />
+      </div>
       <div class="specs">
         <div class="title">
           {{ theMovie.Title }}
@@ -74,6 +78,11 @@ export default {
   components: {
     Loader
   },
+  data() {
+    return {
+      imageLoading: true
+    }
+  },
   computed: {
     theMovie() {
       return this.$store.state.movie.theMovie
@@ -91,7 +100,15 @@ export default {
   // 이미지 resizing 하는 함수!
   methods: {
     reqeustDiffSizeImage(url, size=700) {
-      return  url.replace('SX300', `SX${size}`)
+      if(!url || url === 'N/A') {
+        this. imageLoading = false
+        return ''
+      } else {
+        const src = url.replace('SX300', `SX${size}`)
+        this.$loadImage(src).then(() => this.imageLoading = false)
+        return src
+      }
+      
     }
   }
 }
@@ -148,6 +165,7 @@ export default {
       margin-right: 70px;
       border-radius: 10px;
       background-size: cover;
+      position: relative;
     }
     .specs {
       flex-grow: 1;

@@ -1,26 +1,57 @@
 <template lang="">
-  <div
+  <RouterLink
+    :to="`/movie/${movie.imdbID}`"
     class="movie"
     :style="{ backgroundImage: `url(${movie.Poster})` }">
+    <Loader 
+      v-if="imageLoading"
+      :size="1.5"
+      absolute />
     <div class="info">
-      <div class="year">
+      <div class="year"> 
         {{ movie.Year }}
       </div>
       <div class="title">
         {{ movie.Title }}
       </div>
     </div>
-  </div>
+  </RouterLink>
 </template>
 
 <script>
+import Loader from './Loader.vue'
+
 export default {
+  components: {
+    Loader
+  },
   props: {
     movie: {
       // props의 데이터 타입이랑 초기값 지정
       type: Object, 
       // 객, 배, 함은 참조형 데이터라서 함수로 만들어 반환하게 해줘야 데이터 불변성이 지켜짐
       default: () => ({})
+    }
+  },
+  data() {
+    return {
+      imageLoading: true
+    }
+  },
+  // html과 연결된 직후인 mounted가 적절!
+  mounted() {
+    this.init()
+  },
+  methods: {
+    async init() {
+      const poster = this.movie.Poster
+      if(poster === 'N/A' || !poster) {
+        this.imageLoading = false
+      } else {
+        await this.$loadImage(poster)
+      this.imageLoading = false
+      }
+      
     }
   }
 }
