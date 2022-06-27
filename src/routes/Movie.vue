@@ -73,6 +73,7 @@
   </div>
 </template>
 <script>
+import {mapState} from 'vuex'
 import Loader from '../components/Loader.vue'
 export default {
   components: {
@@ -84,14 +85,10 @@ export default {
     }
   },
   computed: {
-    theMovie() {
-      return this.$store.state.movie.theMovie
-    },
-    loading() {
-      return this.$store.state.movie.loading
-    }
+    ...mapState('movie', ['theMovie', 'loading'])
   },
   created() {
+    // mapActions를 활용한 리팩토링
     this.$store.dispatch('movie/searchMovieWithId', {
       id: this.$route.params.id
     })
@@ -215,20 +212,20 @@ export default {
         font-size: 20px;
       }
     }
-    @include media-breakpoint-down(xl) {
+    @include media-breakpoint-down(lg) {
     .poster {
       width: 300px;
       height: 300px * 3 / 2;
       margin-right: 40px;
       }
     }
-    @include media-breakpoint-down(lg) {
+    @include media-breakpoint-down(md) {
       display: block;
       .poster {
         margin-bottom: 40px;
       }
     }
-    @include media-breakpoint-down(md) {
+    @include media-breakpoint-down(sm) {
       .specs {
         .title {
           font-size: 50px;

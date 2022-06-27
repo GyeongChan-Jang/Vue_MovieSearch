@@ -19,6 +19,7 @@
   </div>
 </template>
 <script>
+import {mapState} from 'vuex'
 import Loader from '../components/Loader.vue'
 export default {
   components: {
@@ -30,24 +31,9 @@ export default {
     }
   }, 
   computed: {
-    image() {
-      return this.$store.state.about.image // 스토어에 상태에 접근할 건데 about 모듈의 image 속성
-    },
-    name() {
-      return this.$store.state.about.name
-    },
-    email() {
-      return this.$store.state.about.email
-    },
-    blog() {
-      return this.$store.state.about.blog
-    },
-    github() {
-      return this.$store.state.about.github
-    },
-    phone() {
-      return this.$store.state.about.phone
-    }
+    // mapState가 반환된 결과가 하나씩 등록될 수 있도록 전개연산자 사용
+    // mapState는 객체 데이터를 반환하기 때문에 전개연산자를 이용해 풀어줌
+    ...mapState('about', ['image', 'name', 'email', 'blog', 'phone'])
   },
   mounted() {
     // 라이플싸이클에서는 비동기 처리 할 수 없음, 비동기 함수를 따로 만들고 라이프싸이클에서는 실행만!
