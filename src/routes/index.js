@@ -9,6 +9,9 @@ export default createRouter({
   // 여기선 Hash 모드로 사용 -> #catetory
   // https://google.com/#/search
   history: createWebHashHistory(),
+  scrollBehavior() {
+    return { top: 0 }
+  },
   // pages
   // hppts://google.com/about
   routes: [

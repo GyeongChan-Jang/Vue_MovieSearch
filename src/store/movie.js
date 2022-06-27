@@ -1,14 +1,18 @@
 import axios from 'axios'
 import _uniqBy from 'lodash/uniqBy'
 
+// 언더바에 의미는 movie.js에서만 쓰겠다는 뜻!
+const _defaultMessage = 'Search for the movie title!'
+
 export default {
   namespaced: true,
   state: () => ({
     movies: [],
-    message: 'Search for the movie title!',
+    message: _defaultMessage,
     loading: false,
     theMovie: {}
   }),
+  // getters -> state를 활용한 계산된 데이터
   getters: {
     movieIds(state) {
       return state.movies.map((m) => m.omdbID)
@@ -24,6 +28,7 @@ export default {
     },
     resetMovies(state) {
       state.movies = []
+      ;(state.message = _defaultMessage), (state.loading = false)
     }
   },
   actions: {
