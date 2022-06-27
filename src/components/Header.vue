@@ -57,7 +57,6 @@ export default {
   methods: {
     isMatch(path) {
       if(!path) return 
-      console.log(this.$route)
       return path.test(this.$route.fullPath) // test 메서드 -> 정규표현식을 받아 일지하는지 판별, fullPath -> route 전체 경로
     },
     toAbout() {
